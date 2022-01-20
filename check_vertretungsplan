@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+KLASSE="&0"
+
+curl -u "&1" --basic -l "https://geschuetzt.bszet.de/s-lk-vw/Vertretungsplaene/vertretungsplan-bgy.pdf" > /tmp/vertretungsplan;
+
+# Suche alle zeilen, welche entweder ein Datum oder vertretung für die klasse sind
+datum_und_vertretung=$(pdftotext -layout -nopgbrk /tmp/vertretungsplan - | grep -E "($klasse)|([0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4})")
+
+# Ich bin mir nicht sicher ob das Datum mit nullen (zero padded) oder ohne ist. Dieses regex prüft für beides 
+regex=$(echo "($(date -d 'tomorrow' +'%d.%m.%Y'))|($(date -d 'tomorrow' +'%_d.%_m.%Y'))" | tr -d " ")
+
+# Entfernt alle Zeilen in der vergangenheit und unnötige leerzeichen
+truncated=$(echo "$datum_und_vertretung" | sed -E "0,/$regex/d" | tr -s " ")
+
+if [ -z "$sedded" ]; then
+    notify-send "Keine Vertretung :c"
+else
+    notify-send "$truncated"
+fi

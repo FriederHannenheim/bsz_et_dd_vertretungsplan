@@ -1,0 +1,9 @@
+[Unit]
+Description=Run vertretungsplan
+
+[Timer]
+Persistent=true
+OnCalendar=Mon..Thu,Sun *-*-* 18:00:00
+
+[Install]
+WantedBy=timers.target

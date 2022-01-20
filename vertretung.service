@@ -1,0 +1,5 @@
+[Unit]
+Description=Den Vertretungsplan als Benachrichtung anzeigen
+
+[Service]
+ExecStart=/home/&0/bin/check_vertretungsplan
