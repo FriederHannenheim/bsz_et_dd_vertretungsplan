@@ -5,7 +5,7 @@ USER="$(whoami)"
 SCRIPT_DIR="/home/$USER/bin"
 SYSTEMD_DIR="/home/$USER/.config/systemd/user"
 
-read -p "Klasse: " klasse
+read -p "Klasse (Wortlaut wie im Vertretungsplan): " klasse
 read -p "geschuetzt.bszet.de Nutzername: " nutzer
 read -p "geschuetzt.bszet.de Passwort: " passwort
 
