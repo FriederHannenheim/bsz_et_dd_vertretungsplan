@@ -12,7 +12,7 @@ regex=$(echo "($(date -d 'tomorrow' +'%d.%m.%Y'))|($(date -d 'tomorrow' +'%_d.%_
 # Entfernt alle Zeilen in der vergangenheit und unnötige leerzeichen
 truncated=$(echo "$datum_und_vertretung" | sed -E "0,/$regex/d" | tr -s " ")
 
-if [ -z "$sedded" ]; then
+if [ -z "$truncated" ]; then
     notify-send "Keine Vertretung :c"
 else
     notify-send "$truncated"
