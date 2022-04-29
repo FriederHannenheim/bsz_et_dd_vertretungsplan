@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
 KLASSE="&0"
 
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+	-d|--date)
+	    DATE="$2"
+	    shift
+	    shift
+	    ;;
+    esac
+done
+
+if [[ "$(nmcli networking connectivity check)" == "none" ]]; then
+    echo "No internet"
+    exit 1
+fi
+
+
 curl -u "&1" --basic -l "https://geschuetzt.bszet.de/s-lk-vw/Vertretungsplaene/vertretungsplan-bgy.pdf" > /tmp/vertretungsplan;
 
 # Suche alle zeilen, welche entweder ein Datum oder vertretung für die klasse sind
