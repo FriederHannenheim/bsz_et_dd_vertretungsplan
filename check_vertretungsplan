@@ -2,6 +2,7 @@
 KLASSE="&0"
 
 POSITIONAL_ARGS=()
+OUT_COMMAND="notify-send"
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -10,11 +11,15 @@ while [[ $# -gt 0 ]]; do
 	    shift
 	    shift
 	    ;;
+	-stdout)
+	    OUT_COMMAND="echo"
+	    shift
+	    ;;
     esac
 done
 
 if [[ "$(nmcli networking connectivity check)" == "none" ]]; then
-    notify-send "No internet"
+    $OUT_COMMAND "No internet"
     exit 1
 fi
 
@@ -31,7 +36,7 @@ regex=$(echo "($(date -d 'tomorrow' +'%d.%m.%Y'))|($(date -d 'tomorrow' +'%_d.%_
 truncated=$(echo "$datum_und_vertretung" | sed -E "0,/$regex/d" | tr -s " ")
 
 if [ -z "$truncated" ]; then
-    notify-send "Keine Vertretung :c"
+    $OUT_COMMAND "Keine Vertretung :c"
 else
-    notify-send "$truncated"
+    $OUT_COMMAND "$truncated"
 fi
